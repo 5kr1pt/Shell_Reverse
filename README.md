@@ -1,7 +1,7 @@
 # Reverse Shells & Web Shells: Conceitos, Dicas e Exemplos
 
 <div align="center">
-<img src="foto.jpg" width="480" height="650">
+<img src="foto.jpg" width="450" height="650">
 </div>
 
 ## Sumário
