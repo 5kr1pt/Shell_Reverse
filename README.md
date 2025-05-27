@@ -159,6 +159,8 @@ Abaixo, alguns Web Shells populares (use apenas para fins educativos e em ambien
 
 Este material destina-se exclusivamente a fins educativos e em testes de intrusão **autorizados**. Qualquer uso ilegal ou não autorizado das técnicas apresentadas é de responsabilidade do indivíduo. Mantenha a ética em primeiro lugar e respeite as leis e políticas de privacidade e nunca se esuqeça, conhecimento não é crime.
 
+>Linkedin: www.linkedin.com/in/pgw-script | Paulo Werneck
+
 ---
 
 > **Nota**: Sempre lembre-se de que a segurança ofensiva exige não apenas conhecimento técnico, mas também responsabilidade e **autorização** para realizar testes.  
